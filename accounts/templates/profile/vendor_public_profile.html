@@ -100,7 +100,7 @@
                                 <div class="col-md-12">
                                     <div class="float-right">
                                         <a href="#" class="btn btn-danger rounded-0 mb-2">Report Vendor</a><br>
-                                        <form action="{% url 'vendor_public_profile' vendor_user.id %}" method="post">
+                                        <form action="{% url 'vendor_public_profile' vendor_id=vendor_user.id %}" method="post">
                                             {% csrf_token %}
                                             <input type="submit" class="btn btn-success rounded-0 mb-2" value="Add To Favourite">
                                         </form>
@@ -188,7 +188,7 @@
 {% comment %}<div class="container-fluid mt-5">
     <div class="row pt-3">
         <div class="col-md-3">
-            <img src="{% static '/main/img/icons/profile_user.png' %}" alt="" class="w-100">
+            <img src="{% static 'main/img/icons/profile_user.png' %}" alt="" class="w-100">
         </div>
         <!-- Navigation -->
         <div class="col-md-9">

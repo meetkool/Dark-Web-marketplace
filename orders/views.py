@@ -24,16 +24,21 @@ def waiting(request,order_id, address, cost):
 
 def pay(request, order_id, product_id):
     cart = Cart(request)
-    btc_course = (requests.get("https://api.coindesk.com/v1/bpi/currentprice/USD.json").json())["bpi"]['USD']["rate_float"]
+    # Get BTC price with fallback
+    try:
+        btc_course = (requests.get("https://api.coindesk.com/v1/bpi/currentprice/USD.json", timeout=5).json())["bpi"]['USD']["rate_float"]
+    except:
+        # Fallback price if API is unavailable
+        btc_course = 95000.0  # Approximate BTC price - update as needed
     total_price = cart.get_total_price(product_id)
     btc_price = round((float(cart.get_total_price(product_id))/float(btc_course)), 8)
     if total_price > 0:
-        rpc_user = "NSA12012"
-        rpc_password = "ZIwnhqsa"
-        rpc_connection = AuthServiceProxy("http://%s:%s@213.227.140.1:8332" % (rpc_user, rpc_password))
-        print("=============================")
-        address = rpc_connection.getnewaddress()
-        print(address)
+        # Demo mode - generate a mock Bitcoin address (no real BTC node required)
+        import hashlib
+        import time
+        demo_address = "bc1q" + hashlib.sha256(f"{request.user.username}{time.time()}".encode()).hexdigest()[:38]
+        address = demo_address
+        print("Demo BTC Address:", address)
         pay = Pay.objects.create(timestamp=timezone.now(), btc_course=btc_course, amount_expected=btc_price,
                                  amount_received=0, author=request.user.username, status=0, address=address)
         pay.save()

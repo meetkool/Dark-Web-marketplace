@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='message',
-            name='check',
+            name='is_read',
             field=models.BooleanField(default=False),
         ),
     ]

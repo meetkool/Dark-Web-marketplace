@@ -1,0 +1,198 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load ratings %}
+{% load auth_extras %}
+{% load avatar_tags %}
+{% block title %}
+    Vendor Dashboard
+{% endblock %}
+{% block content %}
+<div id="sidebar" class="span3">
+    <div class="box text-center " style="background: #141414">
+        <div class="p-a-md">
+            {% avatar user 240 class="img-circle img-responsive" id="user_avatar" %}
+            <p class="text-lg text-white block">{{ user.username }}</p>
+            <p class="text-md text-accent">{{ user.level }}</p>
+        </div>
+        <div class="row b-t ">
+            <div class="col-xs-4 m-a-sm" style="color: #6ec2d1">
+                <a href="{% url 'user_profile' %}">
+                    <i class="fa fa-home"></i>
+                    Overview
+                </a>
+            </div>
+            <div class="col-xs-4 m-a-sm text-warn">
+                <a href="{% url 'vendor_dashboard' %}">
+                    <i class="fa fa-dashboard"></i>
+                    Vendor Panel
+                </a>
+            </div>
+            <div class="col-xs-4 m-a-sm" style="color: #6ec2d1">
+                <a href="{% url 'shipping_options' %}">
+                    <i class="fa fa-ship"></i>
+                    Shipping
+                </a>
+            </div>
+            <div class="col-xs-4 m-a-sm" style="color: #6ec2d1">
+                <a href="{% url 'user_order_list' %}">
+                    <i class="fa fa-shopping-cart"></i>
+                    My Orders
+                </a>
+            </div>
+            <div class="col-xs-4 m-a-sm" style="color: #6ec2d1">
+                <a href="{% url 'user_ratings' %}">
+                    <i class="fa fa-tasks"></i>
+                    My Ratings
+                </a>
+            </div>
+            <div class="col-xs-4 m-a-sm" style="color: #6ec2d1">
+                <a href="#">
+                    <i class="fa fa-question"></i>
+                    Help
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="span9">
+    <div class="well well-small" style="background-color: #0d0d0d; border: none">
+        <div class="row-fluid">
+            <!-- Welcome Header -->
+            <div class="col-12 col-md-12 m-b-md">
+                <div class="card bg-light">
+                    <div class="card-header text-white" style="background: url({% static 'assets/img/title-big.jpg' %}) no-repeat; height: 30px;">
+                        <p style="color: #6ec2d1; padding: 6px 0 0 40px">Vendor Dashboard</p>
+                    </div>
+                    <div class="title-back" style="padding: 20px;">
+                        <h4 class="text-white">Welcome, {{ user.username }}!</h4>
+                        <p style="color: #888">Manage your products and orders from this panel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Management Section -->
+            <div class="col-12 col-md-12 m-b-md">
+                <div class="card">
+                    <div class="card-header text-white" style="background: url({% static 'assets/img/title-big.jpg' %}) no-repeat; height: 30px">
+                        <p style="color: #6ec2d1; padding: 6px 0 0 40px"><i class="fa fa-cube"></i> Product Management</p>
+                    </div>
+                    <div class="card-body" style="background: #141414; padding: 20px;">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'user_vendor_listProducts' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-list fa-2x text-warn"></i>
+                                    <p class="text-white m-t-sm">My Products</p>
+                                    <small style="color: #666">View & manage your products</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'user_vendor_add_product' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-plus fa-2x" style="color: #28a745"></i>
+                                    <p class="text-white m-t-sm">Add Product</p>
+                                    <small style="color: #666">Create a new listing</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'shipping_options' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-truck fa-2x" style="color: #17a2b8"></i>
+                                    <p class="text-white m-t-sm">Shipping Options</p>
+                                    <small style="color: #666">Manage shipping zones</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Management Section -->
+            <div class="col-12 col-md-12 m-b-md">
+                <div class="card">
+                    <div class="card-header text-white" style="background: url({% static 'assets/img/title-big.jpg' %}) no-repeat; height: 30px">
+                        <p style="color: #6ec2d1; padding: 6px 0 0 40px"><i class="fa fa-shopping-cart"></i> Order Management</p>
+                    </div>
+                    <div class="card-body" style="background: #141414; padding: 20px;">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'vendor_list_new_order' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-inbox fa-2x" style="color: #ffc107"></i>
+                                    <p class="text-white m-t-sm">New Orders</p>
+                                    <small style="color: #666">Pending orders to accept</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'vendor_list_ship_order' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-ship fa-2x" style="color: #17a2b8"></i>
+                                    <p class="text-white m-t-sm">Shipped Orders</p>
+                                    <small style="color: #666">Orders in transit</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'vendor_list_complete_order' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-check-circle fa-2x" style="color: #28a745"></i>
+                                    <p class="text-white m-t-sm">Completed Orders</p>
+                                    <small style="color: #666">Successfully delivered</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'vendor_list_cancel_order' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-times-circle fa-2x" style="color: #dc3545"></i>
+                                    <p class="text-white m-t-sm">Canceled Orders</p>
+                                    <small style="color: #666">Orders that were canceled</small>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-4 m-b-sm">
+                                <a href="{% url 'vendor_list_dispute_order' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 20px; text-align: center;">
+                                    <i class="fa fa-exclamation-triangle fa-2x" style="color: #fd7e14"></i>
+                                    <p class="text-white m-t-sm">Disputed Orders</p>
+                                    <small style="color: #666">Orders under dispute</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats Section -->
+            <div class="col-12 col-md-12 m-b-md">
+                <div class="card">
+                    <div class="card-header text-white" style="background: url({% static 'assets/img/title-big.jpg' %}) no-repeat; height: 30px">
+                        <p style="color: #6ec2d1; padding: 6px 0 0 40px"><i class="fa fa-bar-chart"></i> Quick Links</p>
+                    </div>
+                    <div class="card-body" style="background: #141414; padding: 20px;">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3 m-b-sm">
+                                <a href="{% url 'user_profile' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 15px; text-align: center;">
+                                    <i class="fa fa-user fa-2x" style="color: #6ec2d1"></i>
+                                    <p class="text-white m-t-sm">My Profile</p>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-3 m-b-sm">
+                                <a href="{% url 'inbox_list' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 15px; text-align: center;">
+                                    <i class="fa fa-envelope fa-2x" style="color: #6ec2d1"></i>
+                                    <p class="text-white m-t-sm">Messages</p>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-3 m-b-sm">
+                                <a href="{% url 'support:support_list' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 15px; text-align: center;">
+                                    <i class="fa fa-life-ring fa-2x" style="color: #6ec2d1"></i>
+                                    <p class="text-white m-t-sm">Support</p>
+                                </a>
+                            </div>
+                            <div class="col-xs-6 col-md-3 m-b-sm">
+                                <a href="{% url 'product_list' %}" class="btn btn-block" style="background: #1a1a1a; border: 1px solid #333; padding: 15px; text-align: center;">
+                                    <i class="fa fa-shopping-bag fa-2x" style="color: #6ec2d1"></i>
+                                    <p class="text-white m-t-sm">Marketplace</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -22,6 +22,14 @@ def get_user_id(request):
     return current_user.id
 
 
+# Vendor Dashboard
+def vendor_dashboard(request):
+    if request.user.is_authenticated and request.user.is_vendor:
+        return render(request, 'vendor_dashboard.html')
+    else:
+        return HttpResponseRedirect('/')
+
+
 # Add product
 def add_product(request):
     form = ProductForm()
@@ -211,6 +219,7 @@ class VendorNewOrderListView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(paid=2, user=self.request.user).select_related('payment')
@@ -223,6 +232,7 @@ class VendorNewOrderDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get("order_id")
@@ -237,6 +247,7 @@ class VendorShippedOrderListView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(paid=7).select_related('payment')
@@ -249,6 +260,7 @@ class VendorShippedOrderDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get("order_id")
@@ -263,6 +275,7 @@ class VendorCompleteOrderListView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(paid=8).select_related('payment')
@@ -275,6 +288,7 @@ class VendorCompleteOrderDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get("order_id")
@@ -289,6 +303,7 @@ class VendorCancelOrderListView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(Q(paid=3) | Q(paid=4)).select_related('payment')
@@ -301,6 +316,7 @@ class VendorCancelOrderDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get("order_id")
@@ -315,6 +331,7 @@ class VendorDisputeOrderListView(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(Q(paid=5) | Q(paid=6)).select_related('payment')
@@ -327,6 +344,7 @@ class VendorDisputeOrderDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_vendor:
             return HttpResponseRedirect('/')
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         order_id = self.kwargs.get("order_id")

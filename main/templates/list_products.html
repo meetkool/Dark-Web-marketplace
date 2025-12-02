@@ -27,8 +27,8 @@
                 </div>
                 {% if request.user|is_vendor %}
                 <div class="col-xs-4 m-a-sm text-warn" >
-                                <a href="{% url 'user_vendor_listProducts' %}">
-                                    <i class="fa fa-user"></i>
+                                <a href="{% url 'vendor_dashboard' %}">
+                                    <i class="fa fa-dashboard"></i>
                                     Vendor Panel </a>
                 </div>
                 {% else %}

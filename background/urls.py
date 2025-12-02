@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.urls import re_path
 from . import views
 
 app_name = 'background'
 
 urlpatterns = [
-    url(r'^$', views.pull_crypto_price, name='pull_crypto_price'),
+    re_path(r'^$', views.pull_crypto_price, name='pull_crypto_price'),
 ]

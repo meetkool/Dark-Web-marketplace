@@ -24,7 +24,7 @@ def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
-    message = len(Message.objects.filter(check=False))
+    message = len(Message.objects.filter(is_read=False))
     #message = len(Message.objects.all())
     form = LoginForm
     if category_slug:
@@ -76,13 +76,13 @@ def product_detail(request, id, slug):
     product_stock = cart_product_form.get_product_stock(id)
     categories = Category.objects.all()
     crypto_data = crypto_currencies()
-    message = len(Message.objects.filter(check=False))
+    message = len(Message.objects.filter(is_read=False))
 
     product_vendor = Product.objects.values('productOwnerID', 'country').get(id=id)
     country = countries.name(product_vendor.get('country'))
     product_vendor = product_vendor.get('productOwnerID')
 
-    vendor = User.objects.values('id', 'username').filter(id=product_vendor, vendor=True)
+    vendor = User.objects.values('id', 'username').filter(id=product_vendor)
     term_conditions = VendorTerm.objects.filter(userId=product_vendor)
 
     rating_total = 0
@@ -97,19 +97,19 @@ def product_detail(request, id, slug):
         'categories': categories,
         'cart_product_form': cart_product_form,
         'product_stock': product_stock,
-        'vendor': vendor[0],
+        'vendor': vendor[0] if vendor.exists() else {'id': product_vendor, 'username': 'Unknown'},
         'avg_rating': 0 if rating_count == 0 else rating_total/rating_count,
         'country': country,
         'crypto_data': crypto_data,
         'new_message': message,
-        'term_conditions': term_conditions[0]
+        'term_conditions': term_conditions[0].description if term_conditions.exists() else ''
     }
     return render(request, 'main/product/detail.html', context)
 
 
 def search(request):
     if request.method == 'GET':
-        message = len(Message.objects.filter(check=False))
+        message = len(Message.objects.filter(is_read=False))
         price = 0
         if request.GET.get('price'):
             price = int(request.GET.get('price'))
@@ -119,22 +119,22 @@ def search(request):
         category_id = Category.objects.filter(name=category)
         products = {}
 
-        if price > 0 and category is '' and country is '':
+        if price > 0 and category == '' and country == '':
             products = Product.objects.filter(Q(price__gte=price))
-        elif category and price is 0 and country is '':
+        elif category and price == 0 and country == '':
             print("===================================")
             products = Product.objects.filter(category__in=category_id)
-        elif country and price is 0 and category is '':
+        elif country and price == 0 and category == '':
             products = Product.objects.filter(country=country)
-        elif price > 0 and category and country is '':
+        elif price > 0 and category and country == '':
             products = Product.objects.filter(Q(price__gte=price), category__in=category_id)
-        elif country and price > 0 and category is '':
+        elif country and price > 0 and category == '':
             products = Product.objects.filter(Q(price__gte=price), country=country)
-        elif country and category and price is 0:
+        elif country and category and price == 0:
             products = Product.objects.filter(country=country, category__in=category_id)
         elif price > 0 and category and country:
             products = Product.objects.filter(Q(price__gte=price), category__in=category_id, country=country)
-        elif price is 0 and category is '' and country is '':
+        elif price == 0 and category == '' and country == '':
             products = Product.objects.all
 
         categories = Category.objects.all()
