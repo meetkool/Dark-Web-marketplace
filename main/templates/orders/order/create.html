@@ -105,8 +105,8 @@
                             {% for field in form.visible_fields %}
                                 <div class="form-group">
                                  {% comment %}{{ field.label_tag }}{% endcomment %}
-                                {% comment %}<div  style="background: url({% static '/assets/img/title-long.jpg' %}); height: 30px">{% endcomment %}
-                                    <label for="id_{{field.label}}" style="background: url({% static '/assets/img/title-long.jpg' %}) no-repeat; height: 30px;color: #6ec2d1; padding: 5px 0 0 35px">
+                                {% comment %}<div  style="background: url({% static 'assets/img/title-long.jpg' %}); height: 30px">{% endcomment %}
+                                    <label for="id_{{field.label}}" style="background: url({% static 'assets/img/title-long.jpg' %}) no-repeat; height: 30px;color: #6ec2d1; padding: 5px 0 0 35px">
                                         {{ field.label }}
                                     </label>
                                 {% comment %}</div>{% endcomment %}

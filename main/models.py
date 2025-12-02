@@ -31,7 +31,7 @@ class Message(models.Model):
     content = models.TextField(default='')
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    check = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False)
     sender_removed = models.BooleanField(default=False)
     receiver_removed = models.BooleanField(default=False)
 
@@ -60,7 +60,9 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('name', )
-        index_together = (('id', 'slug'),)
+        indexes = [
+            models.Index(fields=['id', 'slug'], name='main_produc_id_f4bffc_idx'),
+        ]
 
     def __str__(self):
         return self.name

@@ -14,7 +14,7 @@
     <div class="p-a-md">
       <p>
           {% avatar user 240 class="img-circle img-responsive" id="user_avatar" %}
-          <a href="{% url 'avatar_change' %}" class="btn btn-success btn-sm">Change avatar</a>
+          <a href="{% url 'avatar:change' %}" class="btn btn-success btn-sm">Change avatar</a>
       </p>
       <p class="text-lg text-white block">{{ user.username }}</p>
       <p class="text-md text-accent">{{ user.level }}</p>
@@ -32,8 +32,8 @@
     </div>
     {% if request.user|is_vendor %}
     <div class="col-xs-4 m-a-sm {% if request.path == '/account/settings/' %} text-warn {% else %} text-side {% endif %}">
-      <a href="{% url 'user_vendor_listProducts' %}">
-        <i class="fa fa-user"></i>
+      <a href="{% url 'vendor_dashboard' %}">
+        <i class="fa fa-dashboard"></i>
         Vendor Panel </a>
     </div>
     

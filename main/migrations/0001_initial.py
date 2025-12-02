@@ -44,10 +44,9 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ('name',),
+                'indexes': [
+                    models.Index(fields=['id', 'slug'], name='main_produc_id_f4bffc_idx'),
+                ],
             },
-        ),
-        migrations.AlterIndexTogether(
-            name='product',
-            index_together={('id', 'slug')},
         ),
     ]

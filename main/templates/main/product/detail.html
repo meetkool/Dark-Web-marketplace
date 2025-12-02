@@ -125,7 +125,7 @@
   		        <p class="title-header">vendor</p>
   		        <ul class="title-back" style="margin-top: -16px">
                 <li class="side-content">
-  				        <a href="{% url 'vendor_public_profile' id=vendor.id %}" style="color: #6ec2d1">Name : {{vendor.username}}</a>
+  				        <a href="{% url 'vendor_public_profile' vendor_id=vendor.id %}" style="color: #6ec2d1">Name : {{vendor.username}}</a>
                 </li>
   			        <li class="side-content">
                   <a style="color: #6ec2d1">Shipped From : {{country}}</a>

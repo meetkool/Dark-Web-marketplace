@@ -32,7 +32,7 @@ def cart_detail(request):
     cart = Cart(request)
     categories = Category.objects.all()
     crypto_data = crypto_currencies()
-    message = len(Message.objects.filter(check=False))
+    message = len(Message.objects.filter(is_read=False))
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     context = {
